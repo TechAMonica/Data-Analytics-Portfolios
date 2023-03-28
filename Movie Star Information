@@ -1,0 +1,63 @@
+/* Create table about the people and what they do here */
+
+
+/* Create table about the people and what they do here */
+
+CREATE TABLE actors (
+id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,birthplace TEXT,continent TEXT, age INTEGER);
+
+INSERT INTO actors (name, birthplace, continent, age) VALUES ("Chris Evans", "Massachusetts, USA", "North America", 41);
+INSERT INTO actors (name, birthplace, continent, age) VALUES ("Sebastian Stan", "Constanța, Romania", "Europe", 40 );
+INSERT INTO actors (name, birthplace, continent, age) VALUES ("Hayley Atwell", "London, England", "Europe", 40);
+INSERT INTO actors (name, birthplace, continent, age) VALUES ("Hugo Weaving", "Ibadan, Nigeria", "Africa", 40);
+INSERT INTO actors (name, birthplace, continent, age) VALUES ("Anthony Mackie", "Louisiana, USA", "North America", 44);
+INSERT INTO actors (name, birthplace, continent, age) VALUES ("Emily VonCamp", "Ontario, Canada", "North America", 36);
+INSERT INTO actors (name, birthplace, continent, age) VALUES ("Stanley Tucci", "New York, USA", "North America", 62);
+
+SELECT * FROM actors;
+
+
+CREATE TABLE movies (id INTEGER PRIMARY KEY,
+title TEXT);
+
+INSERT INTO movies VALUES (1,"Fantastic Four");
+INSERT INTO movies VALUES (2,"The Martian");
+INSERT INTO movies VALUES (3,"The Sweeney");
+INSERT INTO movies VALUES (4,"The Matrix");
+INSERT INTO movies VALUES (5,"We Have a Ghost");
+INSERT INTO movies VALUES (6,"Norman");
+INSERT INTO movies VALUES (7,"The Devil Wears Prada");
+
+
+SELECT * FROM movies;
+
+
+/*Which actor belongs to which movie?*/
+
+SELECT name 
+FROM actors a
+INNER JOIN movies m
+ON a.name = m.title;
+
+
+
+/*Which actor is older than 40?*/
+
+SELECT name, age FROM actors
+WHERE age > 40
+ORDER BY age DESC;
+
+/*Which actor is younger than 40?*/
+
+SELECT name, age FROM actors
+WHERE age < 40;
+
+
+/*Which actors was born in Europe?*/
+
+SELECT name, continent FROM actors
+WHERE continent ='Europe';
+
+
+
+
