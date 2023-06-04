@@ -1,0 +1,86 @@
+# Here are answers to example questions on my Final SQL Project.
+
+#1. Show all customers (full name and customer ID number) that are from the United States.
+
+SELECT FirstName, LastName, CustomerId, Country
+FROM chinook.customers
+WHERE Country = "USA";
+
+#2. Show which customers (full name and state) work for the company Google Inc.
+
+SELECT FirstName, LastName, Company, State
+FROM chinook.customers
+WHERE Company = "Google Inc.";
+
+#3. Show the invoice or invoices of customers who work for Google Inc, their Billing Address, and the Invoice Date.
+
+SELECT cust.FirstName, cust.LastName, cust.Company, inv.InvoiceId, inv.BillingAddress, inv.InvoiceDate
+FROM chinook.invoices AS inv 
+LEFT JOIN chinook.customers AS cust 
+ON inv.CustomerId = cust.CustomerId 
+WHERE cust.Company = "Google Inc.";
+
+#4. Give me the full names, job title, and emails of all Employees working at Chinook.
+
+SELECT FirstName, LastName, Title, Email
+FROM chinook.employees;
+
+#5. Show the invoices associated with each Sales Agent and provide their full names.
+
+SELECT emp.LastName, emp.Firstname, inv.InvoiceId
+FROM chinook.Employees emp 
+JOIN chinook.Customers cust ON cust.SupportRepId = emp.EmployeeId
+JOIN chinook.Invoices Inv ON Inv.CustomerId = cust.CustomerId;
+
+#6. What is the total sales for the year 2013?
+
+SELECT SUM(Total)
+FROM chinook.Invoices
+WHERE InvoiceDate BETWEEN '2013-01-01' AND '2013-12-31';
+
+#7. Show all Tracks, Album Title, Media type, and Genre.
+
+SELECT t.Name AS 'Track Name', a.Title AS 'Album Title', m.Name AS 'Media Type', g.Name AS 'Genre'
+FROM chinook.tracks t
+JOIN chinook.Albums a 
+ON a.AlbumId = t.AlbumId
+JOIN chinook.Media_Types m
+ON m.MediaTypeId = t.MediaTypeId
+JOIN chinook.Genres g
+ON g.GenreId = t.GenreId;
+
+#8. Show the total Sales made by each Sales Agent.
+
+SELECT emp.FirstName, emp.LastName,
+ROUND(SUM(Inv.Total), 2) as 'Total Sales' 
+FROM chinook.Employees emp
+
+JOIN chinook.Customers cust 
+ON cust.SupportRepId = emp.EmployeeId
+
+JOIN chinook.Invoices Inv 
+ON Inv.CustomerId = cust.CustomerId
+
+WHERE emp.Title = 'Sales Support Agent' 
+GROUP BY emp.FirstName;
+
+#9. Show the top 3 sales agents that made the most money in 2013.
+
+SELECT emp.FirstName, emp.LastName,
+ROUND(SUM(Inv.Total), 2) as 'Total Sales' 
+FROM chinook.Employees emp
+
+JOIN chinook.Customers cust 
+ON cust.SupportRepId = emp.EmployeeId
+
+JOIN chinook.Invoices Inv 
+ON Inv.CustomerId = cust.CustomerId
+
+WHERE emp.Title = 'Sales Support Agent' 
+AND Inv.InvoiceDate LIKE '2013%' 
+GROUP BY emp.FirstName
+ORDER BY (round(sum(Inv.Total)))  DESC LIMIT 3;
+
+
+
+
